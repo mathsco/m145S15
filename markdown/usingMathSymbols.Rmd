@@ -1,0 +1,27 @@
+---
+title: "Including mathematical symbols in R Markdown"
+author: "TLS"
+date: "2/10/2015"
+output: pdf_document
+---
+In this document I explain how one can include various mathematical
+symbols in an R Markdown document.  Before
+R Markdown existed, there was a piece of software called LaTeX
+which many typesetters of mathematics use to create their documents.
+Built into LaTeX were many **macros** for making special characters.
+When R Markdown was being developed, the producers thought it wise
+to incorporate these same macros.  Thus, if there is some common
+mathematical character you cannot figure out how to make, you might
+consult a LaTeX site.  Several good links are this one from Brown
+University
+<http://cs.brown.edu/about/system/managed/latex/doc/symbols.pdf>
+and <http://detexify.kirelabs.org/classify.html>.
+
+All that said, the crux of the matter is that mathematical symbols
+always appear between pairs of dollar signs \$, and macros are
+preceded with a backslash $\backslash$ character.  Putting these two
+facts together can get you far.  Here are some examples:
+
+
+\$$\backslash$mu\$
+in your R Markdown source file results in the rendering $\mu$.

@@ -1,0 +1,57 @@
+---
+title: "Section 2.1: Displays of Categorical Data"
+author: "Thomas Scofield"
+date: "2/5/2015"
+output: pdf_document
+---
+Some of the plots/displays of data that you see in Chapter 2 are reproduced in this document.  It is possible, generally speaking, to do this only if I have access to their data.  When I did not know of a way to access their data, I produce a similar display using the Math 143 Calvin student survey data from 2004, which I load next, and give the name **ss**:
+```{r}
+ss=read.csv("http://www.calvin.edu/~scofield/data/csv/ssurv.csv")
+head(ss)
+```
+# One Categorical Variable (p. 47)
+I will use the categorical variable **selfhandedness** found in the **ss** data frame.  We can produce a frequency table of the values
+in this variable, much like Table 2.1:
+```{r}
+xtabs(~selfhandedness, data=ss)
+```
+Evidently, there were 31 left-handed respondents, 248 right-handed ones, and
+1 who did not respond.  If, instead, we want a *relative frequency* table, like the one in Table 2.2, we do what we did above, then ask the results to be converted to proportions:
+```{r}
+prop.table(xtabs(~selfhandedness, data=ss))
+```
+To get a bar chart as in Figure 2.1(a), we can do something like these, one which gives frequencies, and the other (more complicated) one giving relative frequencies:
+```{r,fig.width=3,fig.show="hold"}
+bargraph(~selfhandedness,data=ss)
+barchart(prop.table(xtabs(~selfhandedness,data=ss)),horizontal=FALSE,ylab="Relative frequency")
+```
+Though the book does it, I do not produce here an example of a pie chart.  Rest assured, RStudio can do them.  However, I side with those who think pie charts are a bad idea.
+Look at this graphic for some insight into why I think bar graphs are quite superior: <http://www.calvin.edu/~stob/courses/m241/F10/pie.jpg>
+
+# Two-Way Tables (p. 49)
+The Lock book refers to a data set containing different survey data (i.e., not from Calvin students, different set of questions).  It is found in the data frame called **StudentSurvey**.  We produce a two-way table for the two categorical variables "gender" and "preferred award", as in Table 2.5.  First, however, I look at the variable names to see what RStudio calls them.  As this document is being produced using R Markdown, which seems unaware of the packages available at the RStudio Console, I must also load the **Lock5withR** package:
+```{r}
+require(Lock5withR)
+names(StudentSurvey)
+```
+The variables of interest to us are called **Sex** and **Award**.  Next, we make a 2-way table:
+```{r}
+xtabs(~Sex + Award, data=StudentSurvey)
+```
+Actually, the result differs from Table 2.5 in that it has totals (also known as marginal totals) for each row and column.  We can get this as well, processing the table with an extra addmargins() command:
+```{r}
+addmargins(xtabs(~Sex + Award, data=StudentSurvey))
+```
+We mimick the bar charts on p. 53 below.
+```{r}
+barchart(xtabs(~Award + Gender, data=StudentSurvey), horizontal=FALSE, main="Figure 2.2(a)")
+```
+You might try out modifications to the above on your own, to see how changes affect the plots.  Here are two possible modifications:
+```{r, eval=FALSE}
+barchart(xtabs(~Sex + Award, data=StudentSurvey), horizontal=FALSE)
+barchart(xtabs(~Award + Gender, data=StudentSurvey))
+```
+Next, using what seems to me a much simpler command, I produce something like Figure 2.1(b):
+```{r}
+bargraph(~Award+Sex, data=StudentSurvey, groups=Sex)
+```

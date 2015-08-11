@@ -1,0 +1,29 @@
+---
+title: "In-class Chapter 6 review"
+author: "MATH 145 Students"
+date: "Thursday, April 16, 2015"
+output: pdf_document
+---
+
+```{r}
+require(mosaic)
+require("Lock5withR")
+```
+
+1. (Answer supplied by team consisting of deHaan, LaCroix and Coria)
+The goal of a CI here is to find the range of the mean heart rates that is likely to contain the population parameter.
+
+```{r,fig.width=5,fig.height=3}
+x = do(5000) * (mean(~HeartRate, data=resample(ICUAdmissions)))
+histogram(~result, data=x)
+```
+
+```{r}
+mean(~HeartRate, data=ICUAdmissions)
+qt(.975,199)
+sd(~HeartRate, data=ICUAdmissions)
+```
+
+```{r}
+98.925 + c(-1,1)*1.97*26.83/sqrt(200)
+```
